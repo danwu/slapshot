@@ -1,0 +1,6 @@
+= slapshot
+
+Describe your project here
+
+:include:slapshot.rdoc
+

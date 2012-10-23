@@ -1,0 +1,5 @@
+= slapshot
+
+Generate this with
+    slapshot rdoc
+After you have described your command line interface
