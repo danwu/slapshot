@@ -17,11 +17,7 @@ class SlapshotConnection
 
   def search(query, count)
     
-    puts @api["search"].url
-    
-    response = @api["search"].get :params => { :client => @instance, :app => @app, :q => query, :c => count }, :content_type => :json, :accept => :json
-    
-    
+    response = @api["search"].get :params => { :i => @instance, :app => @app, :q => query, :c => count }, :content_type => :json, :accept => :json
     
     json_response = JSON.parse(response.body)
     puts "Found #{json_response['count']} total results, retrieving #{count} results in #{json_response['search_time']} ms."
