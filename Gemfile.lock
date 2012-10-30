@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    slapshot (0.0.1)
+    slapshot (0.0.5)
       formatador (= 0.2.3)
       gli (= 2.4.0)
       json (= 1.7.5)

@@ -16,6 +16,7 @@ EOS
   s.files = %w(
 bin/slapshot
 lib/slapshot/version.rb
+lib/slapshot/main.rb
 lib/slapshot.rb
   )
   s.require_paths << 'lib'
