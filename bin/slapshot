@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'gli'
 require 'slapshot'
+require 'io/console'
 
 include GLI::App
 
@@ -62,23 +63,20 @@ arg_name 'Pass in the username and password to login and generate a token'
 
 command :login do |c|
 
-  c.desc 'Username (required)'
-  c.flag :u
-
-  c.desc 'Password (required)'
-  c.flag :p
-  
   c.action do |global_options,options,args|
 
     url = global_options[:url] || ENV['APPSHOT_URL'] || "https://api.appshot.com"    
     
-    if !options[:u] or !options[:p]
-      raise "When logging in you need to pass in both a username and a password"
-    end
-
     if !File.exists? get_token_file
 
-      token = create_token(url, options[:u], options [:p])
+      print "Username: "
+      username = gets
+      
+      print "Password: "
+      password = STDIN.noecho(&:gets)
+      puts
+
+      token = create_token(url, username, password)
       puts "Generated token: #{token} and stored it in #{get_token_file}"
       
     else
