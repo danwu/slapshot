@@ -25,6 +25,9 @@ lib/slapshot.rb
   s.rdoc_options << '--title' << 'slapshot' << '--main' << 'README.rdoc' << '-ri'
   s.bindir = 'bin'
   s.executables << 'slapshot'
+  
+  s.required_ruby_version = '>= 1.9.0'
+  
   s.add_development_dependency('rake')
   s.add_development_dependency('rdoc')
   s.add_development_dependency('aruba')
