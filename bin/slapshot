@@ -36,7 +36,7 @@ command :search do |c|
      end
 
      if args.length != 1
-       raise 'The search command takes exactly one argument: the query'
+       raise 'The search command takes exactly one argument: the query surrounded by single quotes'
      end
      
      r = @sc.search args[0], options[:c]
