@@ -16,7 +16,7 @@ desc 'Your Appshot instance'
 flag [:i,:instance]
 
 desc 'Search your instance of Appshot'
-arg_name 'Pass in the query'
+arg_name 'Pass in the query surrounded by single quotes'
 command :search do |c|
 
   c.desc 'Limit the search to this application or group'
