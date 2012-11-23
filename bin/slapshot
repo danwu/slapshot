@@ -119,6 +119,10 @@ pre do |global,command,options,args|
   if command.names != 'login' and command.names != 'logout'
 
     instance = global[:i] || ENV['APPSHOT_INSTANCE']  
+    
+    if !instance
+      raise "You need to specific an instance (-i) to execute the #{command.names} command"
+    end
 
     @sc = Appshot.new url, get_token, instance
     
