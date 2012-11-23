@@ -16,7 +16,7 @@ desc 'Your Appshot instance'
 flag [:i,:instance]
 
 desc 'Search your instance of Appshot'
-arg_name 'Pass in the query'
+arg_name 'query surrounded by single quotes'
 command :search do |c|
 
   c.desc 'Get all results'
@@ -37,7 +37,7 @@ command :search do |c|
   c.action do |global_options,options,args|
 
      if args.length != 1
-       raise "The search command takes exactly one argument: the query"
+       raise 'The search command takes exactly one argument: the query surrounded by single quotes'
      end
      
      count = options[:c]
