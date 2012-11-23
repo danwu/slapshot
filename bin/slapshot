@@ -19,8 +19,13 @@ desc 'Search your instance of Appshot'
 arg_name 'Pass in the query'
 command :search do |c|
 
-  c.desc 'Limit the search to this application or group'
-  c.flag [:a, :app]
+  c.desc 'Get all results'
+  c.default_value false
+  c.switch [:a, :all]
+
+  c.desc 'Return all fields of the results, including code snippets'
+  c.default_value false
+  c.switch [:f, :full]
 
   c.desc 'Export the results to an Excel file with the given name'
   c.flag [:x, :xls]
@@ -31,20 +36,22 @@ command :search do |c|
 
   c.action do |global_options,options,args|
 
-     if options[:a]
-       @sc.set_app options[:a]
-     end
-
      if args.length != 1
-       raise 'The search command takes exactly one argument: the query'
+       raise "The search command takes exactly one argument: the query"
      end
      
-     r = @sc.search args[0], options[:c]
+     count = options[:c]
+     if options[:a]
+       count = 5000
+     end
+     
+     r = @sc.search args[0], count, options[:f]
      
      if options[:x]
        @sc.to_xls r, options[:x]
        puts "Exported search results to #{options[:x]}"
      else
+       puts
        puts @sc.to_table r
      end
   end

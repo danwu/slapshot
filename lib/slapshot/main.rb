@@ -48,25 +48,23 @@ end
 class Appshot
   
   def initialize(url, token, instance)
-    @app = "Portfolio"
     @instance = instance
-    
     @api = RestClient::Resource.new url, :timeout => -1, :headers => {'Appshot-AuthToken' => token, 'Appshot-Instance' => instance}
   end
   
-  def set_app(app)
-    @app = app
-  end
-
-  def search(query, count)
+  def search(query, count, full)
     
-    response = @api["v1/search"].get :params => { :i => @instance, :app => @app, :q => query, :c => count }, :content_type => :json, :accept => :json
+    response = @api["v1/search"].get :params => { :i => @instance, :q => query, :c => count, :f => full }, :content_type => :json, :accept => :json
     
     json_response = JSON.parse(response.body)
     
-    puts "Found #{json_response['count']} total results, retrieving #{count} results in #{json_response['search_time']} ms."
+    if (Integer(json_response['count']) < Integer(count))
+      count = json_response['count']
+    end
     
+    puts "Found #{json_response['count']} total results, retrieving #{count} results in #{json_response['search_time']} ms."
     json_response['docs']
+    
   end
 
   def to_table(result)
