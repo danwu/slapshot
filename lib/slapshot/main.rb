@@ -10,7 +10,12 @@ def get_token_file
 end
 
 def create_token(url, username, password)
-  token = RestClient.get url + '/login', :params => { :u => username, :p => password }
+
+  begin
+    token = RestClient.get url + '/login', :params => { :u => username, :p => password }
+  rescue RestClient::BadRequest => e
+    return nil
+  end
 
   File.open(get_token_file, 'w') {|f| 
     f.write(token)

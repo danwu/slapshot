@@ -50,14 +50,6 @@ command :search do |c|
   end
 end
 
-desc 'Describe upload here'
-arg_name 'Describe arguments to upload here'
-command :upload do |c|
-  c.action do |global_options,options,args|
-    puts "upload command ran"
-  end
-end
-
 desc 'Login to the API and generate a token'
 arg_name 'Pass in the username and password to login and generate a token'
 
@@ -76,8 +68,13 @@ command :login do |c|
       password = STDIN.noecho(&:gets)
       puts
 
-      token = create_token(url, username, password)
-      puts "Generated token: #{token} and stored it in #{get_token_file}"
+      token = create_token(url, username.strip, password.strip)
+      
+      if token
+        puts "Generated token: #{token} and stored it in #{get_token_file}"
+      else
+        puts "Could not authenticate the given username and password"
+      end
       
     else
       puts "Found existing file at #{get_token_file}"
@@ -132,9 +129,6 @@ end
 on_error do |exception|
   # Error logic here
   # return false to skip default error handling
-
-  #puts "exception #{exception.http_body}"
-  
   true
 end
 
