@@ -7,7 +7,7 @@ include GLI::App
 
 program_desc 'A command line interface to the Appshot API'
 
-#version Slapshot::VERSION
+version Slapshot::VERSION
 
 desc 'Your Appshot url'
 flag [:url]
@@ -101,7 +101,7 @@ command :logout do |c|
     if File.exists? get_token_file
 
       token = remove_token(url)
-      puts "Disactivated token: #{token} and removed #{get_token_file}"
+      puts "Deauthorized token: #{token} and removed #{get_token_file}"
       
     else
       puts "You are not logged in."

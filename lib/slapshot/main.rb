@@ -12,7 +12,7 @@ end
 def create_token(url, username, password)
 
   begin
-    token = RestClient.get url + '/login', :params => { :u => username, :p => password }
+    token = RestClient.get url + '/token/auth', :params => { :u => username, :p => password }
   rescue RestClient::BadRequest => e
     return nil
   end
@@ -28,7 +28,8 @@ def remove_token(url)
 
   token = get_token
 
-  RestClient.get url + '/logout', :params => { :t => token }
+  res = RestClient.get url + '/token/deauth', :params => { :t => token }
+  raise "Token de-authorization failed" if res != "success"
 
   File.delete(get_token_file)
   
@@ -54,7 +55,7 @@ class Appshot
   
   def search(query, count, full)
     
-    response = @api["v1/search"].get :params => { :i => @instance, :q => query, :c => count, :f => full }, :content_type => :json, :accept => :json
+    response = @api["service/api/search"].get :params => { :i => @instance, :q => query, :c => count, :f => full }, :content_type => :json, :accept => :json
     
     json_response = JSON.parse(response.body)
     
